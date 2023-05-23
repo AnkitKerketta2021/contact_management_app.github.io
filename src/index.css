@@ -1,0 +1,38 @@
+/* !=============== Tailwindcss =============== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.createBtn {
+  @apply text-blue-100 bg-blue-500 rounded-md p-3 hover:text-white delay-100 ease-in-out mb-10 ;
+}
+
+.headerComponent {
+  @apply text-white bg-[#2e6189] text-2xl;
+}
+
+.pageContainer {
+  @apply text-white bg-[#ece9e4] mt-12;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  background: #ddddddea !important;
+}
+/* 
+@media screen and (max-width:580px) {
+
+input{
+  width: 200px !important;
+  background: red;
+}
+  }
+   */
