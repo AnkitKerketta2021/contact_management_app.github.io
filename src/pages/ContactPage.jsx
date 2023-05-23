@@ -55,10 +55,11 @@ const ContactPage = () => {
           buttonType={buttonType}
           selectedData={selectedData}
           showModal={showModal}
+          setselectedData={setselectedData}
           setshowModal={setshowModal}
         />
       )}
-      <button className="createBtn createButton" onClick={handleCreateContact}>
+      <button className="createBtn createButton" onClick={()=>handleCreateContact()}>
         Create Contact
       </button>
       <div className="contactsContainer gridContent  place-content-center gap-28 justify-evenly">

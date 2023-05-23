@@ -46,6 +46,7 @@ const ModalComponent = ({
             <FormComponents
               setshowModal={setshowModal}
               buttonType={buttonType}
+              setselectedData={setselectedData}
             />
           ) : (
             <FormComponents
