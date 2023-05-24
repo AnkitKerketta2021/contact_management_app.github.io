@@ -59,45 +59,54 @@ const ContactPage = () => {
           setshowModal={setshowModal}
         />
       )}
-      <button className="createBtn createButton" onClick={()=>handleCreateContact()}>
+      <button
+        className="createBtn createButton"
+        onClick={() => handleCreateContact()}
+      >
         Create Contact
       </button>
       <div className="contactsContainer gridContent  place-content-center gap-28 justify-evenly">
         {/*?//?========================= Fetch Rdux Store data and loop ===================================  */}
-        {contact.map((value, index) => (
-          <div className="contacts" key={value.id}>
-            <div className="">
-              <img
-                className="rounded-[5%] aspect-[2/3] m-auto mb-3"
-                src={value.avatar}
-                alt="avatar1"
-              />
-              <h5>{value.fname + " " + value.lname}</h5>
-            </div>
+        {contact.length ? (
+          contact.map((value, index) => (
+            <div className="contacts" key={value.id}>
+              <div className="">
+                <img
+                  className="rounded-[5%] aspect-[2/3] m-auto mb-3"
+                  src={value.avatar}
+                  alt="avatar1"
+                />
+                <h5>{value.fname + " " + value.lname}</h5>
+              </div>
 
-            {/*?//?========================= Action Buttons ===================================  */}
-            <div className="mt-2 grid">
-              <button
-                className="btn mb-2 w-[90px] mx-auto btn-info"
-                onClick={() => viewDetails(index)}
-              >
-                Details
-              </button>
-              <button
-                className="btn mb-2 w-[90px] mx-auto btn-warning"
-                onClick={() => handleEdit(index)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn mb-2 w-[90px] mx-auto btn-danger"
-                onClick={() => handleDelete(value.id)}
-              >
-                Delete
-              </button>
+              {/*?//?========================= Action Buttons ===================================  */}
+              <div className="mt-2 grid">
+                <button
+                  className="btn mb-2 w-[90px] mx-auto btn-info"
+                  onClick={() => viewDetails(index)}
+                >
+                  Details
+                </button>
+                <button
+                  className="btn mb-2 w-[90px] mx-auto btn-warning"
+                  onClick={() => handleEdit(index)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn mb-2 w-[90px] mx-auto btn-danger"
+                  onClick={() => handleDelete(value.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <h3 className="w-[500px] mx-[50%] mt-14">
+            No Contact available click☝️ on Create COntact to add contact
+          </h3>
+        )}
       </div>
     </div>
   );

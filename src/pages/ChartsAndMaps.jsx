@@ -2,99 +2,45 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
-import LineChart from "../components/LineChart";
 import axios from "axios";
+import LineChart2 from "../components/LineChart2";
 
 const ChartsAndMaps = () => {
   const [apiData, setapiData] = useState([]);
   const [state, setstate] = useState([]);
 
-  const fetchApiData = async () =>
-    await axios
-      .get("https://disease.sh/v3/covid-19/countries")
-      .then((res) => {
-        setapiData(res.data);
-        for (let index = 0; index < res.data.length; index++) {
-          let data = [];
-          data.push({
-            countryName: res[index].country,
-            activeCases: res[index].active,
-            recovered: res[index].recovered,
-            death: res[index].deaths,
-          });
-          setstate(data);
-        }
-      })
-      .catch((err) => console.log(err.message));
+  // ! ======================================= API CALL =======================================
+  const fetchApiData = async () => {
+    try {
+      let data = await axios.get("https://disease.sh/v3/covid-19/countries");
+      setapiData(data.data);
+    } catch (error) {
+      console.log("ERROR---->", error.message);
+    }
+  };
+console.log(apiData,"DATA");
   useEffect(() => {
     fetchApiData();
   }, []);
 
-  // useEffect(() => {
-  //   for (let index = 0; index < apiData.length; index++) {
-  //     apiData.map((val, index) => {
-  //       let data = {
-  //         countryName: val.country,
-  //         activeCases: val.active,
-  //         recovered: val.recovered,
-  //         death: val.deaths,
-  //       };
-  //       setstate(data);
-  //     });
-  //   }
-  // }, [apiData]);
+  useEffect(() => {
+    apiData.map((val, index) => {
+      let data1 = {
+      geocode: [val.countryInfo.lat, val.countryInfo.long],
+      popUp: val.country,
+      activeCases: val.active,
+      recovered: val.recovered,
+      death: val.deaths,
+      imgUrl: val.countryInfo.flag,
+    }
+        
+        state.push(data1)
+      
+    });
+  }, [apiData]);
 
-
-  const markers = [
-    {
-      geocode: [38.54, -97],
-      popUp: "United State",
-      activeCases:804795,
-      recovered:105074558,
-      death:1164351,
-      imgUrl:'https://disease.sh/assets/img/flags/us.png'
-    },
-    {
-      geocode: [36, 138],
-      popUp: "Japan",
-      activeCases:33728878,
-      recovered:0,
-      death:74694,
-      imgUrl:'https://disease.sh/assets/img/flags/jp.png'
-    },
-    {
-      geocode: [35, 105],
-      popUp: "China",
-      activeCases:118977,
-      recovered:379053,
-      death:5272,
-      imgUrl:'https://disease.sh/assets/img/flags/cn.png'
-    },
-    {
-      geocode: [60, 100],
-      popUp: "Russia",
-      activeCases:172124,
-      recovered:22346830,
-      death:398919,
-      imgUrl:'https://disease.sh/assets/img/flags/ru.png'
-    },
-    {
-      geocode: [20, 77],
-      popUp: "India",
-      activeCases:7104,
-      recovered:44448392,
-      death:531843,
-      imgUrl:'https://disease.sh/assets/img/flags/in.png'
-    },
-    {
-      geocode: [9, 7],
-      popUp: "Nigeria",
-      activeCases:3567,
-      recovered:259953,
-      death:3155,
-      imgUrl:'https://disease.sh/assets/img/flags/ng.png'
-    },
-  ];
+console.log(state,"SSSSS");
+  const markers = state
   const customIcon = new Icon({
     iconUrl:
       "https://png.pngtree.com/png-clipart/20220131/original/pngtree-3d-pin-map-marker-location-front-view-png-image_7249831.png",
@@ -104,13 +50,17 @@ const ChartsAndMaps = () => {
     <div className="text-center">
       <h3 className="mt-12">CHARTS AND MAPS</h3>
 
-      <LineChart />
+      <br />
+      <br />
+      <hr />
+      <LineChart2 />
+      <hr />
       <br />
       <br />
 
       <MapContainer
         className="h-[70vh] w-[65vw] mx-10 lg:w-[60vw] lg:h-[70vh] sm:h-[200px]"
-        center={[12.9716, 77.5946]}
+        center={[7, 77]}
         zoom={2}
       >
         <TileLayer
